@@ -1,22 +1,21 @@
-import org.scalatest._
+package io.tmio.embeddedcassandra
 
-class EmbeddedCassandraSpec extends FlatSpec with Matchers {
-  
-  "An embedded Cassandra server" should "use a default file location" in {
-    assert(new EmbeddedCassandra().dataFolder == "target/embeddedcassandra")
+import org.scalatest.{FlatSpec, Matchers}
+
+import com.datastax.driver.core.Session
+
+/**
+  * Created by lb on 8/19/16.
+  */
+class EmbeddedCassandraSpec extends FlatSpec with Matchers with EmbeddedCassandra {
+
+  "An embedded Cassandra server" should "take a body" in {
+    withRunningCassandra() {
+      runInSession((session : Session) => {
+//        val rs = session.execute("select * from system.local")
+//        rs.all()
+    })
+    }
+
   }
-  
-  it should "allow to override the data location" in {
-    assert(new EmbeddedCassandra(dataFolder = "foo/bar").dataFolder == "foo/bar")
-  }
-  
-  it should "use a default startup timeout" in {
-    assert(new EmbeddedCassandra().startupTimeout == 20000)
-  }
-  
-  it should "allow to override the startup timeout" in {
-    assert(new EmbeddedCassandra(startupTimeout = 40000).startupTimeout == 40000)
-  }
-  
-  
 }

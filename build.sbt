@@ -2,7 +2,7 @@ import sbtrelease.Version
 
 
 lazy val commonSettings = Seq(
-  name := "scalatest-embedded-kafka",
+  name := "scalatest-embedded-cassandra",
   organization := "io.tmio",
   scalaVersion := "2.11.8",
   crossScalaVersions := Seq("2.11.8"),
@@ -12,8 +12,12 @@ lazy val commonSettings = Seq(
     "org.scalatest" %% "scalatest" % "2.2.5",
     "org.apache.cassandra" % "cassandra-all" % "3.7",
     "com.typesafe.scala-logging" %% "scala-logging" % "3.4.0",
-    "commons-io" % "commons-io" % "2.5"
-  )
+    "commons-io" % "commons-io" % "2.5",
+    "org.cassandraunit" % "cassandra-unit" % "3.0.0.1",
+    "com.datastax.cassandra" % "cassandra-driver-core" % "3.1.0"
+
+
+)
 )
 
 lazy val publishSettings = Seq(
