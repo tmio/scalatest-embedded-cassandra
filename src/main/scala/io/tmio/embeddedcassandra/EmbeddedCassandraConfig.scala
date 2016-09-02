@@ -9,6 +9,9 @@ import org.apache.cassandra.config.DatabaseDescriptor
 case class EmbeddedCassandraConfig(
   dataFolder:String = "target/embeddedcassandra",
   startupTimeout:Long = 20000,
-  yamlResource:String = null) extends LazyLogging {
-  
+  yamlResource:String = null
+)
+
+object EmbeddedCassandraConfig {
+  implicit val defaultEmbeddedCassandraConfig = EmbeddedCassandraConfig()
 }

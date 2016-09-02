@@ -31,7 +31,7 @@ sealed trait EmbeddedCassandraSupport extends LazyLogging {
     * @param body   the function to execute
     * @param config an implicit [[EmbeddedCassandraConfig]]
     */
-  def withRunningCassandra(config:EmbeddedCassandraConfig = new EmbeddedCassandraConfig())(body: => Any) = {
+  def withRunningCassandra[R](body: => R)(implicit config: EmbeddedCassandraConfig) = {
 
     start(config)
 
@@ -65,11 +65,11 @@ sealed trait EmbeddedCassandraSupport extends LazyLogging {
 
   def nativeTransportPort = DatabaseDescriptor.getNativeTransportPort()
 
-  def runInSession(body: => Function[Session, _]) = {
+  def runInSession[R](body: (Session) => R) = {
     val cluster = Cluster.builder().addContactPoint(host).withPort(nativeTransportPort).build()
     val session = cluster.connect()
     try {
-      body.apply(session)
+      body(session)
     } finally {
       cluster.close()
     }
